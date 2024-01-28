@@ -6,12 +6,12 @@ function Gameboard() {
     for (let i = 0; i < rows; i++) {
         _board.push([])
         for (let j = 0; j < cols; j++) {
-            _board[i].push('-')
+            _board[i].push(Cell())
         }
     }
 
     function placeMark(cell, player) {
-
+        
     }
 
     function getBoard() {
@@ -25,13 +25,36 @@ function Gameboard() {
     return {getBoard, placeMark, printBoard}
 }
 
+function Cell(){
+    let value = '-'
+
+    function addMark(player) {
+        value = player
+    }
+
+    function getValue() {
+        return value
+    }
+
+    return {addMark, getValue}
+}
 
 function GameController(
     playerOne = 'Player One',
     playerTwo = 'Player Two'
 ){
     const board = Gameboard()
+    const players = [
+        { 
+            name: playerOne,
+            mark: 'X'
+        },
+        {
+            name: playerTwo,
+            mark: 'O'
 
+        }
+    ]
     board.printBoard();
 }
 
