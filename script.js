@@ -1,20 +1,38 @@
-const gameBoard = (function () {
-    const rows = 3;
-    const cols = 3;
-    const _board = [];
+function Gameboard() {
+    const rows = 3
+    const cols = 3
+    const _board = []
 
     for (let i = 0; i < rows; i++) {
-        _board.push([]);
+        _board.push([])
         for (let j = 0; j < cols; j++) {
-            _board[i].push('-');
+            _board[i].push('-')
         }
     }
 
-    function getBoard() {
-        console.log(_board);
+    function placeMark(cell, player) {
+
     }
 
-    return {getBoard}
-})()
+    function getBoard() {
+        return _board
+    }
 
-gameBoard.getBoard();
+    function printBoard() {
+        console.log(_board)
+    }
+
+    return {getBoard, placeMark, printBoard}
+}
+
+
+function GameController(
+    playerOne = 'Player One',
+    playerTwo = 'Player Two'
+){
+    const board = Gameboard()
+
+    board.printBoard();
+}
+
+const game = GameController();
