@@ -86,11 +86,17 @@ function GameController(
         console.log(`${getActivePlayer().name}'s turn.`)
     }
 
+    function playRound(cell) {
+        console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
+        board.placeMark(cell, getActivePlayer().mark)
+
+        switchPlayersTurn()
+        printNewRound()
+    }
+
     printNewRound()
-
-    board.placeMark([1,1], players[0].mark)
-
-    board.printBoard()
+    playRound([0,0])
+    playRound([1,2])
 }
 
 const game = GameController();
