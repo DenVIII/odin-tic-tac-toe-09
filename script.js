@@ -9,9 +9,24 @@ function Gameboard() {
             _board[i].push(Cell())
         }
     }
-
+    /* _board[0][0].addMark()
+    console.log(_board[0][0].getValue()) */
     function placeMark(cell, player) {
-        
+        const availableCells = [];
+
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                if(_board[i][j].getValue() === '-') {
+                    availableCells.push([i, j])
+                }
+            }
+        }
+
+        if (availableCells.length === 0) return
+
+        if (JSON.stringify(availableCells).includes(cell.toString())) {
+            _board[cell[0]][cell[1]].addMark(player)
+        }
     }
 
     function getBoard() {
@@ -19,7 +34,8 @@ function Gameboard() {
     }
 
     function printBoard() {
-        console.log(_board)
+        const boardWithCellValues = _board.map((row) => row.map((cell) => cell.getValue()))
+        console.log(boardWithCellValues)
     }
 
     return {getBoard, placeMark, printBoard}
@@ -55,7 +71,10 @@ function GameController(
 
         }
     ]
-    board.printBoard();
+    board.printBoard()
+
+    board.placeMark([1,1], players[0].mark)
+    board.printBoard()
 }
 
 const game = GameController();
