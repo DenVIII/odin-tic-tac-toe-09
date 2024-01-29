@@ -9,8 +9,7 @@ function Gameboard() {
             _board[i].push(Cell())
         }
     }
-    /* _board[0][0].addMark()
-    console.log(_board[0][0].getValue()) */
+
     function placeMark(cell, player) {
         const availableCells = [];
 
@@ -71,9 +70,26 @@ function GameController(
 
         }
     ]
-    board.printBoard()
+
+    let activePlayer = players[0]
+
+    function switchPlayersTurn() {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0]
+    }
+
+    function getActivePlayer() {
+        return activePlayer
+    }
+
+    function printNewRound() {
+        board.printBoard()
+        console.log(`${getActivePlayer().name}'s turn.`)
+    }
+
+    printNewRound()
 
     board.placeMark([1,1], players[0].mark)
+
     board.printBoard()
 }
 
