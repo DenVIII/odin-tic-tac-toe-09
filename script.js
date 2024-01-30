@@ -15,7 +15,9 @@ function Gameboard() {
 
         if (JSON.stringify(availableCells).includes(cell.toString())) {
             _board[cell[0]][cell[1]].addMark(player)
-        }
+            return true
+        } 
+        return false
     }
 
     function getBoard() {
@@ -116,10 +118,12 @@ function GameController(
     function playRound(cell) {
         printNewRound()
         console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
-        board.placeMark(cell, getActivePlayer().mark)
-
-        switchPlayersTurn()
-        countTurns()
+        if (board.placeMark(cell, getActivePlayer().mark)) {
+            switchPlayersTurn()
+            countTurns()
+        } else {
+            console.log('Pick a valid cell!')
+        }
     }
     
     while (!checkForDraw()) {
