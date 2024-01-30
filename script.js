@@ -11,7 +11,19 @@ function Gameboard() {
     }
 
     function placeMark(cell, player) {
-        const availableCells = [];
+        const availableCells = getAvailableBoardCells()
+
+        if (JSON.stringify(availableCells).includes(cell.toString())) {
+            _board[cell[0]][cell[1]].addMark(player)
+        }
+    }
+
+    function getBoard() {
+        return _board
+    }
+
+    function getAvailableBoardCells() {
+        const availableCells = []
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
@@ -21,15 +33,7 @@ function Gameboard() {
             }
         }
 
-        if (availableCells.length === 0) return
-
-        if (JSON.stringify(availableCells).includes(cell.toString())) {
-            _board[cell[0]][cell[1]].addMark(player)
-        }
-    }
-
-    function getBoard() {
-        return _board
+        return availableCells
     }
 
     function printBoard() {
@@ -86,6 +90,15 @@ function GameController(
         console.log(`${getActivePlayer().name}'s turn.`)
     }
 
+    function getCell() {
+        const cell = []
+
+        cell.push(prompt('row') - 1)
+        cell.push(prompt('column') - 1)
+
+        return cell
+    }
+
     function playRound(cell) {
         console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
         board.placeMark(cell, getActivePlayer().mark)
@@ -95,8 +108,8 @@ function GameController(
     }
 
     printNewRound()
-    playRound([0,0])
-    playRound([1,2])
+    playRound(getCell())
+    playRound(getCell())
 }
 
 const game = GameController();
