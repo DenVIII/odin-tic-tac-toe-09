@@ -1,6 +1,6 @@
 function Gameboard() {
-    const rows = 3
-    const cols = 3
+    const rows = 2
+    const cols = 2
     const _board = []
 
     for (let i = 0; i < rows; i++) {
@@ -41,7 +41,7 @@ function Gameboard() {
         console.log(boardWithCellValues)
     }
 
-    return {getBoard, placeMark, printBoard}
+    return {getBoard, getAvailableBoardCells, placeMark, printBoard}
 }
 
 function Cell(){
@@ -76,6 +76,7 @@ function GameController(
     ]
 
     let activePlayer = players[0]
+    let turnCounter = 1
 
     function switchPlayersTurn() {
         activePlayer = activePlayer === players[0] ? players[1] : players[0]
@@ -87,6 +88,7 @@ function GameController(
 
     function printNewRound() {
         board.printBoard()
+        console.log(`Round ${turnCounter}!`)
         console.log(`${getActivePlayer().name}'s turn.`)
     }
 
@@ -99,17 +101,30 @@ function GameController(
         return cell
     }
 
+    function checkForDraw() {
+        if (board.getAvailableBoardCells().length === 0){
+            console.log('Draw!')
+            return true
+        }
+        return false
+    }
+
+    function countTurns() {
+        turnCounter++
+    }
+
     function playRound(cell) {
+        printNewRound()
         console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
         board.placeMark(cell, getActivePlayer().mark)
 
         switchPlayersTurn()
-        printNewRound()
+        countTurns()
     }
-
-    printNewRound()
-    playRound(getCell())
-    playRound(getCell())
+    
+    while (!checkForDraw()) {
+        playRound(getCell())
+    }
 }
 
 const game = GameController();
