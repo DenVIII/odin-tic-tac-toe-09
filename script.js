@@ -47,6 +47,7 @@ function Gameboard() {
                 return false
             }
         }
+        console.log('Horizontal') //For testing
         return true
     }
 
@@ -59,11 +60,41 @@ function Gameboard() {
                 return false
             }
         }
+        console.log('Vertical') //For testing
         return true
     }
 
     function checkDiagonals(cell) {
+        let rowIndex = cell[0]
+        let colIndex = cell[1]
+        let cellValue = _board[rowIndex][colIndex].getValue()
+        let isAllMatch = true
 
+        for (let i = 0; i < rows; i++) {
+            console.log(i)
+            console.log(_board[i][i].getValue())
+            if (cellValue !== _board[i][i].getValue()) {
+                isAllMatch = false
+                break
+            }
+        }   
+
+        if (isAllMatch) {
+            console.log('First diagonal') //For testing
+            return isAllMatch
+        } else {
+            isAllMatch = true
+        }
+
+        for (let i = 0; i < rows; i++) {
+            if (cellValue !== _board[i][rows - 1 - i].getValue()) {
+                isAllMatch = false
+                break
+            }
+        }
+        
+        console.log('Second diagonal') //For testing
+        return isAllMatch
     }
 
     function printBoard() {
@@ -71,7 +102,7 @@ function Gameboard() {
         console.log(boardWithCellValues)
     }
 
-    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals, checkVerticals}
+    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals, checkVerticals, checkDiagonals}
 }
 
 function Cell(){
@@ -126,14 +157,17 @@ function GameController(
     function getCell() {
         const cell = []
 
-        cell.push(prompt('row') - 1)
-        cell.push(prompt('column') - 1)
+        cell.push(Math.floor(Math.random() * 3))    // This is for quick random tests
+        cell.push(Math.floor(Math.random() * 3))
+
+        /* cell.push(prompt('row') - 1)
+        cell.push(prompt('column') - 1) */
 
         return cell
     }
 
     function checkForDraw() {
-        if (board.getAvailableBoardCells().length === 0){
+        if (board.getAvailableBoardCells().length === 0 && !winner){
             board.printBoard()
             console.log('Draw!')
             return true
@@ -146,7 +180,7 @@ function GameController(
     }
 
     function checkTheWinConditions(cell) {
-        if (board.checkHorizontals(cell) || board.checkVerticals(cell)) {
+        if (board.checkHorizontals(cell) || board.checkVerticals(cell) || board.checkDiagonals(cell)) {
             board.printBoard()
             winner = activePlayer
         }
