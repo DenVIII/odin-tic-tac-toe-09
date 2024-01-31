@@ -169,7 +169,6 @@ function GameController(
     function checkForDraw() {
         if (board.getAvailableBoardCells().length === 0 && !winner){
             board.printBoard()
-            console.log('Draw!')
             return true
         }
         return false
@@ -201,13 +200,19 @@ function GameController(
         
     }
     
-    while (!checkForDraw() && !winner) {
-        playRound(getCell())
+    function playGame() {
+        while (!checkForDraw() && !winner) {
+            playRound(getCell())
+        }
+        if (winner) {
+            console.log(`And the winner is ${winner.name}`)
+        } else {
+            console.log(`It's a draw!`)
+        }
     }
 
-    if (winner) {
-        console.log(`And the winner is ${winner.name}`)
-    }
+    playGame()
+    
 }
 
 const game = GameController();
