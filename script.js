@@ -38,12 +38,32 @@ function Gameboard() {
         return availableCells
     }
 
+    function checkHorizontals(cell) {
+        let rowIndex = cell[0]
+        let cellValue = _board[rowIndex][0].getValue()
+
+        for (let i = 1; i < rows; i++) {
+            if (cellValue !== _board[rowIndex][i].getValue()) {
+                return false
+            }
+        }
+        return true
+    }
+
+    function checkVerticals(cell) {
+        
+    }
+
+    function checkDiagonals(cell) {
+
+    }
+
     function printBoard() {
         const boardWithCellValues = _board.map((row) => row.map((cell) => cell.getValue()))
         console.log(boardWithCellValues)
     }
 
-    return {getBoard, getAvailableBoardCells, placeMark, printBoard}
+    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals}
 }
 
 function Cell(){
@@ -79,6 +99,7 @@ function GameController(
 
     let activePlayer = players[0]
     let turnCounter = 1
+    let winner;
 
     function switchPlayersTurn() {
         activePlayer = activePlayer === players[0] ? players[1] : players[0]
@@ -115,19 +136,33 @@ function GameController(
         turnCounter++
     }
 
+    function checkTheWinConditions(cell) {
+        if (board.checkHorizontals(cell)) {
+            winner = activePlayer
+        }
+
+    }
+
     function playRound(cell) {
         printNewRound()
         console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
+        
         if (board.placeMark(cell, getActivePlayer().mark)) {
+            checkTheWinConditions(cell)
             switchPlayersTurn()
             countTurns()
         } else {
             console.log('Pick a valid cell!')
         }
+        
     }
     
-    while (!checkForDraw()) {
+    while (!checkForDraw() && !winner) {
         playRound(getCell())
+    }
+
+    if (winner) {
+        console.log(`And the winner is ${winner.name}`)
     }
 }
 
