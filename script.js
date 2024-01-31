@@ -1,6 +1,6 @@
 function Gameboard() {
-    const rows = 2
-    const cols = 2
+    const rows = 3
+    const cols = 3
     const _board = []
 
     for (let i = 0; i < rows; i++) {
@@ -51,7 +51,15 @@ function Gameboard() {
     }
 
     function checkVerticals(cell) {
-        
+        let colIndex = cell[1]
+        let cellValue = _board[0][colIndex].getValue()
+
+        for (let i = 0; i < cols; i++) {
+            if (cellValue !== _board[i][colIndex].getValue()) {
+                return false
+            }
+        }
+        return true
     }
 
     function checkDiagonals(cell) {
@@ -63,7 +71,7 @@ function Gameboard() {
         console.log(boardWithCellValues)
     }
 
-    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals}
+    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals, checkVerticals}
 }
 
 function Cell(){
@@ -126,6 +134,7 @@ function GameController(
 
     function checkForDraw() {
         if (board.getAvailableBoardCells().length === 0){
+            board.printBoard()
             console.log('Draw!')
             return true
         }
@@ -137,7 +146,8 @@ function GameController(
     }
 
     function checkTheWinConditions(cell) {
-        if (board.checkHorizontals(cell)) {
+        if (board.checkHorizontals(cell) || board.checkVerticals(cell)) {
+            board.printBoard()
             winner = activePlayer
         }
 
