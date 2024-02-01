@@ -70,8 +70,6 @@ function Gameboard() {
         let isAllMatch = true
 
         for (let i = 0; i < rows; i++) {
-            console.log(i)
-            console.log(_board[i][i].getValue())
             if (cellValue !== _board[i][i].getValue()) {
                 isAllMatch = false
                 break
@@ -202,24 +200,25 @@ function GameController(
         
     }
 
-    function playGame() {
-        setParameters()
-
-        while (!checkForDraw() && !winner) {
-            playRound(getCell())
-        }
-
+    function announceGameResults() {
         if (winner) {
             console.log(`And the winner is ${winner.name}`)
         } else {
             console.log(`It's a draw!`)
         }
+    }
 
-        let userAnswer = prompt('Want to play another game?(Yes/No)', 'Yes') 
-        if (userAnswer.toLowerCase() === 'yes') {
-            return true
-        } 
-        return false
+    function askForRematch() {
+        return prompt('Want to play another game?(Yes/No)', 'Yes').toLowerCase() === 'yes'
+    }
+
+    function playGame() {
+        setParameters()
+        while (!checkForDraw() && !winner) {
+            playRound(getCell())
+        }
+        announceGameResults()
+        return askForRematch()
     }
 
     while (playGame()) {
