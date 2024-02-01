@@ -34,7 +34,6 @@ function Gameboard() {
                 }
             }
         }
-
         return availableCells
     }
 
@@ -123,7 +122,7 @@ function GameController(
     playerOne = 'Player One',
     playerTwo = 'Player Two'
 ){
-    const board = Gameboard()
+    let board, activePlayer, turnCounter, winner
     const players = [
         { 
             name: playerOne,
@@ -136,9 +135,12 @@ function GameController(
         }
     ]
 
-    let activePlayer = players[0]
-    let turnCounter = 1
-    let winner;
+    function setParameters() {
+        board = Gameboard()
+        activePlayer = players[0]
+        turnCounter = 1
+        winner = undefined;
+    }
 
     function switchPlayersTurn() {
         activePlayer = activePlayer === players[0] ? players[1] : players[0]
@@ -199,19 +201,30 @@ function GameController(
         }
         
     }
-    
+
     function playGame() {
+        setParameters()
+
         while (!checkForDraw() && !winner) {
             playRound(getCell())
         }
+
         if (winner) {
             console.log(`And the winner is ${winner.name}`)
         } else {
             console.log(`It's a draw!`)
         }
+
+        let userAnswer = prompt('Want to play another game?(Yes/No)', 'Yes') 
+        if (userAnswer.toLowerCase() === 'yes') {
+            return true
+        } 
+        return false
     }
 
-    playGame()
+    while (playGame()) {
+        //
+    }
     
 }
 
