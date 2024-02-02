@@ -218,7 +218,7 @@ function GameController(
             playRound(getCell())
         }
         announceGameResults()
-        return askForRematch()
+        return false //For now its set as false, but here should be askForRematch()
     }
 
     while (playGame()) {
