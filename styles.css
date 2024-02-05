@@ -51,6 +51,18 @@ footer {
     font-family: 'Roboto', sans-serif;
 }
 
+i.fa-github {
+    font-size: 1.5rem;
+}
+
+i::before {
+    color: var(--secondary-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
 
 .bold {
     font-weight: bold;
