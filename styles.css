@@ -25,6 +25,7 @@ body {
 header {
     margin-top: 15px;
     font-size: 2.5rem;
+    word-spacing: 30px;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -50,8 +51,40 @@ footer {
     font-family: 'Roboto', sans-serif;
 }
 
+
+.bold {
+    font-weight: bold;
+}
+
 .game-players {
     display: flex;
+    width: 600px;
+    justify-content: space-between;
+    font-size:  1.25rem;
+}
+
+.game-players > * {
+    flex: 1;
+}
+
+.player-mark {
+    font-size: 1rem;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    padding-left: 10px;
+    letter-spacing: 10px;
+    font-size: 2.25rem;
+}
+
+.player.one {
+    text-align: start;
+}
+
+.player.two {
+    text-align: end;
 }
 
 .game-field {
