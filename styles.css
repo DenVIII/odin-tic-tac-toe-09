@@ -1,0 +1,67 @@
+:root {
+    --background-color: #E6E9EC;
+    --main-color: #EDAE49; 
+    --secondary-color: #392F5A;
+    --accent-color: #EA2B1F;
+    --text-color: #343633;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header {
+    margin-top: 15px;
+}
+
+section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: var(--text-color);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    color: var(--text-color); 
+    background-color: var(--background-color);
+}
+
+.game-players {
+    display: flex;
+}
+
+.game-field {
+    display: grid;
+    grid: repeat(3, 100px) / repeat(3, 100px);
+    gap: 5px;
+}
+
+.game-cell {
+    border: none;
+    background-color: var(--background-color);
+}
+
+.game-cell:hover {
+    background-color: var(--main-color);
+    cursor: pointer;
+}
