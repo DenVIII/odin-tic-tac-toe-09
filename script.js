@@ -133,6 +133,8 @@ function GameController(
         }
     ]
 
+    setParameters()
+
     function setParameters() {
         board = Gameboard()
         activePlayer = players[0]
@@ -221,10 +223,39 @@ function GameController(
         return false //For now its set as false, but here should be askForRematch()
     }
 
-    while (playGame()) {
+/*     while (playGame()) {
         //
+    } */
+    return {
+        playRound,
+        getActivePlayer,
+        getBoard: board.getBoard
     }
-    
 }
 
-const game = GameController();
+function displayController() {
+    const game = GameController()
+    const gameSection = document.querySelector('.game-board')
+    const gameField = document.querySelector('.game-field')
+
+    function updateGameBoard() {
+        gameField.textContent = ''
+
+        const board = game.getBoard()
+
+        board.forEach(row => {
+            row.forEach(cell => {
+                const cellButton = document.createElement('button')
+                cellButton.classList.add('game-cell')
+
+                cellButton.textContent = cell.getValue()
+                gameField.appendChild(cellButton)
+            })
+        })
+
+    }
+
+    updateGameBoard()
+}
+
+displayController()
