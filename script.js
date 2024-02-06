@@ -235,6 +235,8 @@ function GameController(
         getActivePlayer,
         getCurrentTurnNumber,
         getBoard: board.getBoard
+        playerOneName: players[0].name
+        playerTwoName: players[1].name
     }
 }
 
@@ -242,6 +244,10 @@ function displayController() {
     const game = GameController()
     const gameSection = document.querySelector('.game-board')
     const gameField = document.querySelector('.game-field')
+    const playerOneName = document.querySelector('.one>.player-name>span')
+    const playerTwoName = document.querySelector('.two>.player-name>span')
+    const turnNumber = document.querySelector('.turn-number')
+    const turnPlayer = document.querySelector('.turn-player')
 
     function updateGameBoard() {
         gameField.textContent = ''
@@ -257,6 +263,11 @@ function displayController() {
                 gameField.appendChild(cellButton)
             })
         })
+
+        playerOneName.textContent = game.playerOneName
+        playerTwoName.textContent = game.playerTwoName
+        turnNumber.textContent = game.getCurrentTurnNumber()
+        turnPlayer.textContent = game.getActivePlayer().name
 
     }
 
