@@ -180,6 +180,10 @@ function GameController(
         turnCounter++
     }
 
+    function getCurrentTurnNumber() {
+        return turnCounter
+    }
+
     function checkTheWinConditions(cell) {
         if (board.checkHorizontals(cell) || board.checkVerticals(cell) || board.checkDiagonals(cell)) {
             board.printBoard()
@@ -229,6 +233,7 @@ function GameController(
     return {
         playRound,
         getActivePlayer,
+        getCurrentTurnNumber,
         getBoard: board.getBoard
     }
 }
