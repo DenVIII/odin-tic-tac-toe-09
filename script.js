@@ -29,7 +29,7 @@ function Gameboard() {
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-                if(_board[i][j].getValue() === '-') {
+                if(_board[i][j].getValue() === '') {
                     availableCells.push([i, j])
                 }
             }
@@ -103,7 +103,7 @@ function Gameboard() {
 }
 
 function Cell(){
-    let value = '-'
+    let value = ''
 
     function addMark(player) {
         value = player
@@ -234,8 +234,8 @@ function GameController(
         playRound,
         getActivePlayer,
         getCurrentTurnNumber,
-        getBoard: board.getBoard
-        playerOneName: players[0].name
+        getBoard: board.getBoard,
+        playerOneName: players[0].name,
         playerTwoName: players[1].name
     }
 }
@@ -254,11 +254,12 @@ function displayController() {
 
         const board = game.getBoard()
 
-        board.forEach(row => {
-            row.forEach(cell => {
+        board.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
                 const cellButton = document.createElement('button')
                 cellButton.classList.add('game-cell')
 
+                cellButton.dataset.cell = [rowIndex, colIndex]
                 cellButton.textContent = cell.getValue()
                 gameField.appendChild(cellButton)
             })
@@ -268,8 +269,16 @@ function displayController() {
         playerTwoName.textContent = game.playerTwoName
         turnNumber.textContent = game.getCurrentTurnNumber()
         turnPlayer.textContent = game.getActivePlayer().name
-
     }
+
+    function clickHandlerBoard(e) {
+        const selectedCell = e.target.dataset.cell
+
+        if (!selectedCell) return
+        game.playRound(selectedCell.split(','))
+        updateGameBoard()
+    }
+    gameField.addEventListener('click', clickHandlerBoard)
 
     updateGameBoard()
 }
