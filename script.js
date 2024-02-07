@@ -270,6 +270,7 @@ function displayController() {
     const playerTwoWins = document.querySelector('.score-two')
     const winnerName = document.querySelector('.winner-name')
     const roundResultScreen = document.querySelector('.result-screen')
+    const roundResultDisplay = document.querySelector('.result-display')
     const turnNumber = document.querySelector('.turn-number')
     const turnPlayer = document.querySelector('.turn-player')
 
@@ -303,13 +304,31 @@ function displayController() {
         if (!selectedCell) return
 
         const result = game.playRound(selectedCell.split(','))
+ 
         if (result) {
-            roundResultScreen.classList.toggle('active')
-            winnerName.textContent = result
+            showGameResultScreen(result)
+        } else {
+            updateGameBoard()
         }
+        
+    }
+
+    function showGameResultScreen(result) {
+        roundResultScreen.classList.toggle('active')
+        
+        if (result === 'Draw') {       
+            roundResultDisplay.textContent = `It's a draw!`
+        } else {
+            roundResultDisplay.innerHTML = `And the winner is: <span class="winner-name">${result}</span>`
+        }
+    }
+
+    function closeGameResultScreen() {
+        roundResultScreen.classList.toggle('active')
         updateGameBoard()
     }
     gameField.addEventListener('click', clickHandlerBoard)
+    roundResultScreen.addEventListener('click', closeGameResultScreen)
 
     updateGameBoard()
 }

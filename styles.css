@@ -121,13 +121,17 @@ a {
     width: 100%;
     min-height: 100%;
     background-color: #34363380;
-    justify-content: center;
+}
+
+.container {
+    display: flex;
     align-items: center;
 }
 
 .result-display {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     border-radius: 20px;
     width: 400px;
     height: 200px;
@@ -146,4 +150,6 @@ a {
 
 .active {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
