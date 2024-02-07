@@ -164,6 +164,10 @@ function GameController(
         return activePlayer
     }
 
+    function getPlayerInfo(index, prop) {
+        return players[index][prop]
+    }
+
     function printNewRound() {
         board.printBoard()
         console.log(`Round ${turnCounter}!`)
@@ -255,10 +259,7 @@ function GameController(
         getActivePlayer,
         getCurrentTurnNumber,
         getBoard: board.getBoard,
-        playerOneName: players[0].name,
-        playerTwoName: players[1].name,
-        playerOneWins: players[0].wins,
-        playerTwoWins: players[1].wins
+        getPlayerInfo
     }
 }
 
@@ -268,6 +269,8 @@ function displayController() {
     const gameField = document.querySelector('.game-field')
     const playerOneName = document.querySelector('.one>.player-name>span')
     const playerTwoName = document.querySelector('.two>.player-name>span')
+    const playerOneWins = document.querySelector('.score-one')
+    const playerTwoWins = document.querySelector('.score-two')
     const turnNumber = document.querySelector('.turn-number')
     const turnPlayer = document.querySelector('.turn-player')
 
@@ -287,8 +290,10 @@ function displayController() {
             })
         })
 
-        playerOneName.textContent = game.playerOneName
-        playerTwoName.textContent = game.playerTwoName
+        playerOneName.textContent = game.getPlayerInfo(0, 'name')
+        playerTwoName.textContent = game.getPlayerInfo(0, 'name')
+        playerOneWins.textContent = game.getPlayerInfo(0, 'wins')
+        playerTwoWins.textContent = game.getPlayerInfo(1, 'wins')
         turnNumber.textContent = game.getCurrentTurnNumber()
         turnPlayer.textContent = game.getActivePlayer().name
     }
