@@ -99,7 +99,15 @@ function Gameboard() {
         console.log(boardWithCellValues)
     }
 
-    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals, checkVerticals, checkDiagonals}
+    function clearBoard() {
+        _board.forEach(row => {
+            row.forEach(cell => {
+                cell.clearCell()
+            })
+        })
+    }
+
+    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals, checkVerticals, checkDiagonals, clearBoard}
 }
 
 function Cell(){
@@ -113,30 +121,36 @@ function Cell(){
         return value
     }
 
-    return {addMark, getValue}
+    function clearCell() {
+        value = ''
+    }
+
+    return {addMark, getValue, clearCell}
 }
 
 function GameController(
     playerOne = 'Player One',
     playerTwo = 'Player Two'
 ){
-    let board, activePlayer, turnCounter, winner
+    const board = Gameboard()
+    let activePlayer, turnCounter, winner
     const players = [
         { 
             name: playerOne,
-            mark: 'X'
+            mark: 'X',
+            wins: 0
         },
         {
             name: playerTwo,
-            mark: 'O'
-
+            mark: 'O',
+            wins: 0
         }
     ]
 
     setParameters()
 
     function setParameters() {
-        board = Gameboard()
+        board.clearBoard()
         activePlayer = players[0]
         turnCounter = 1
         winner = undefined;
@@ -171,7 +185,7 @@ function GameController(
     function checkForDraw() {
         if (board.getAvailableBoardCells().length === 0 && !winner){
             board.printBoard()
-            return true
+            return 'Draw'
         }
         return false
     }
@@ -188,22 +202,28 @@ function GameController(
         if (board.checkHorizontals(cell) || board.checkVerticals(cell) || board.checkDiagonals(cell)) {
             board.printBoard()
             winner = activePlayer
+            winner.wins++
+            return winner
         }
-
     }
 
     function playRound(cell) {
+        let result
         printNewRound()
         console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
         
         if (board.placeMark(cell, getActivePlayer().mark)) {
-            checkTheWinConditions(cell)
+            result = checkTheWinConditions(cell) || checkForDraw()
             switchPlayersTurn()
             countTurns()
         } else {
             console.log('Pick a valid cell!')
         }
-        
+
+        if (result) {
+            setParameters()
+            return result
+        }
     }
 
     function announceGameResults() {
@@ -236,7 +256,9 @@ function GameController(
         getCurrentTurnNumber,
         getBoard: board.getBoard,
         playerOneName: players[0].name,
-        playerTwoName: players[1].name
+        playerTwoName: players[1].name,
+        playerOneWins: players[0].wins,
+        playerTwoWins: players[1].wins
     }
 }
 
@@ -275,7 +297,11 @@ function displayController() {
         const selectedCell = e.target.dataset.cell
 
         if (!selectedCell) return
-        game.playRound(selectedCell.split(','))
+
+        const result = game.playRound(selectedCell.split(','))
+        if (result) {
+            console.log(result)
+        }
         updateGameBoard()
     }
     gameField.addEventListener('click', clickHandlerBoard)
