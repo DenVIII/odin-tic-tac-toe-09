@@ -115,7 +115,7 @@ a {
     cursor: pointer;
 }
 
-.winner {
+.result-screen {
     display: none;
     position: absolute;
     width: 100%;
@@ -125,7 +125,7 @@ a {
     align-items: center;
 }
 
-.winner-display {
+.result-display {
     display: flex;
     align-items: center;
     border-radius: 20px;

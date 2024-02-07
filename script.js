@@ -207,7 +207,7 @@ function GameController(
             board.printBoard()
             winner = activePlayer
             winner.wins++
-            return winner
+            return winner.name
         }
     }
 
@@ -268,6 +268,8 @@ function displayController() {
     const playerTwoName = document.querySelector('.two>.player-name>span')
     const playerOneWins = document.querySelector('.score-one')
     const playerTwoWins = document.querySelector('.score-two')
+    const winnerName = document.querySelector('.winner-name')
+    const roundResultScreen = document.querySelector('.result-screen')
     const turnNumber = document.querySelector('.turn-number')
     const turnPlayer = document.querySelector('.turn-player')
 
@@ -302,7 +304,8 @@ function displayController() {
 
         const result = game.playRound(selectedCell.split(','))
         if (result) {
-            console.log(result)
+            roundResultScreen.classList.toggle('active')
+            winnerName.textContent = result
         }
         updateGameBoard()
     }
