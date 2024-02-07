@@ -291,7 +291,7 @@ function displayController() {
         })
 
         playerOneName.textContent = game.getPlayerInfo(0, 'name')
-        playerTwoName.textContent = game.getPlayerInfo(0, 'name')
+        playerTwoName.textContent = game.getPlayerInfo(1, 'name')
         playerOneWins.textContent = game.getPlayerInfo(0, 'wins')
         playerTwoWins.textContent = game.getPlayerInfo(1, 'wins')
         turnNumber.textContent = game.getCurrentTurnNumber()
