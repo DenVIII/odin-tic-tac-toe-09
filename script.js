@@ -251,9 +251,6 @@ function GameController(
         return false //For now its set as false, but here should be askForRematch()
     }
 
-/*     while (playGame()) {
-        //
-    } */
     return {
         playRound,
         getActivePlayer,
