@@ -67,18 +67,20 @@ function Gameboard() {
         let rowIndex = cell[0]
         let colIndex = cell[1]
         let cellValue = _board[rowIndex][colIndex].getValue()
+        let result = []
         let isAllMatch = true
 
         for (let i = 0; i < rows; i++) {
+            result.push([i,i]) 
             if (cellValue !== _board[i][i].getValue()) {
-                isAllMatch = false
+                result = []
                 break
             }
         }   
 
-        if (isAllMatch) {
+        if (result.length === rows) {
             console.log('First diagonal') //For testing
-            return isAllMatch
+            return result
         } else {
             isAllMatch = true
         }
@@ -107,7 +109,16 @@ function Gameboard() {
         })
     }
 
-    return {getBoard, getAvailableBoardCells, placeMark, printBoard, checkHorizontals, checkVerticals, checkDiagonals, clearBoard}
+    return {
+        getBoard,
+        getAvailableBoardCells,
+        placeMark,
+        printBoard,
+        checkHorizontals,
+        checkVerticals,
+        checkDiagonals,
+        clearBoard
+    }
 }
 
 function Cell(){
@@ -125,7 +136,11 @@ function Cell(){
         value = ''
     }
 
-    return {addMark, getValue, clearCell}
+    return {
+        addMark,
+        getValue,
+        clearCell
+    }
 }
 
 function GameController(
@@ -203,11 +218,12 @@ function GameController(
     }
 
     function checkTheWinConditions(cell) {
-        if (board.checkHorizontals(cell) || board.checkVerticals(cell) || board.checkDiagonals(cell)) {
+        let result = board.checkHorizontals(cell) || board.checkVerticals(cell) || board.checkDiagonals(cell)
+        if (result) {
             board.printBoard()
             winner = activePlayer
             winner.wins++
-            return winner.name
+            return result
         }
     }
 
@@ -225,7 +241,6 @@ function GameController(
         }
 
         if (result) {
-            setParameters()
             return result
         }
     }
@@ -255,6 +270,7 @@ function GameController(
         playRound,
         getActivePlayer,
         getCurrentTurnNumber,
+        setParameters,
         getBoard: board.getBoard,
         getPlayerInfo
     }
@@ -304,27 +320,30 @@ function displayController() {
         if (!selectedCell) return
 
         const result = game.playRound(selectedCell.split(','))
- 
+        updateGameBoard()
+
         if (result) {
-            showGameResultScreen(result)
-        } else {
-            updateGameBoard()
+            changeResultScreenContent(result)
+            setTimeout(showGameResultScreen, 2000)
         }
         
     }
 
-    function showGameResultScreen(result) {
+    function showGameResultScreen() {
         roundResultScreen.classList.toggle('active')
-        
+    }
+
+    function changeResultScreenContent(result) {
         if (result === 'Draw') {       
             roundResultDisplay.textContent = `It's a draw!`
         } else {
-            roundResultDisplay.innerHTML = `And the winner is: <span class="winner-name">${result}</span>`
+            roundResultDisplay.innerHTML = `And the winner is: <span class="winner-name">${game.getActivePlayer().name}</span>`
         }
     }
 
     function closeGameResultScreen() {
         roundResultScreen.classList.toggle('active')
+        game.setParameters()
         updateGameBoard()
     }
     gameField.addEventListener('click', clickHandlerBoard)
