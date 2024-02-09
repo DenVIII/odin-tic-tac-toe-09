@@ -40,6 +40,15 @@ section {
     font-family: 'Space Mono', sans-serif;
 }
 
+button {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.crossed {
+    color: var(--accent-color)
+}
+
 footer {
     display: flex;
     justify-content: center;

@@ -40,27 +40,31 @@ function Gameboard() {
     function checkHorizontals(cell) {
         let rowIndex = cell[0]
         let cellValue = _board[rowIndex][0].getValue()
+        let result = []
 
-        for (let i = 1; i < rows; i++) {
+        for (let i = 0; i < rows; i++) {
+            result.push([rowIndex, i])
             if (cellValue !== _board[rowIndex][i].getValue()) {
-                return false
+                result = false
+                break 
             }
         }
-        console.log('Horizontal') //For testing
-        return true
+        return result
     }
 
     function checkVerticals(cell) {
         let colIndex = cell[1]
         let cellValue = _board[0][colIndex].getValue()
+        let result = []
 
         for (let i = 0; i < cols; i++) {
+            result.push([i, colIndex])
             if (cellValue !== _board[i][colIndex].getValue()) {
-                return false
+                result = false
+                break 
             }
         }
-        console.log('Vertical') //For testing
-        return true
+        return result
     }
 
     function checkDiagonals(cell) {
@@ -68,7 +72,6 @@ function Gameboard() {
         let colIndex = cell[1]
         let cellValue = _board[rowIndex][colIndex].getValue()
         let result = []
-        let isAllMatch = true
 
         for (let i = 0; i < rows; i++) {
             result.push([i,i]) 
@@ -81,19 +84,18 @@ function Gameboard() {
         if (result.length === rows) {
             console.log('First diagonal') //For testing
             return result
-        } else {
-            isAllMatch = true
         }
 
         for (let i = 0; i < rows; i++) {
+            result.push([i,rows - 1 - i])
             if (cellValue !== _board[i][rows - 1 - i].getValue()) {
-                isAllMatch = false
+                result = false
                 break
             }
         }
         
         console.log('Second diagonal') //For testing
-        return isAllMatch
+        return result
     }
 
     function printBoard() {
@@ -236,13 +238,13 @@ function GameController(
             result = checkTheWinConditions(cell) || checkForDraw()
             switchPlayersTurn()
             countTurns()
+            if (result) {
+                return result
+            }
         } else {
             console.log('Pick a valid cell!')
         }
-
-        if (result) {
-            return result
-        }
+        
     }
 
     function announceGameResults() {
@@ -324,6 +326,7 @@ function displayController() {
 
         if (result) {
             changeResultScreenContent(result)
+            crossLine(result)
             setTimeout(showGameResultScreen, 2000)
         }
         
@@ -345,6 +348,15 @@ function displayController() {
         roundResultScreen.classList.toggle('active')
         game.setParameters()
         updateGameBoard()
+    }
+
+    function crossLine(indexArr) {
+        indexArr.forEach(index => {
+            const btn = document.querySelector(`[data-cell="${index.join(',')}"]`)
+            btn.style = `
+                border: 0.2em solid var(--main-color);
+            `
+        })
     }
     gameField.addEventListener('click', clickHandlerBoard)
     roundResultScreen.addEventListener('click', closeGameResultScreen)
