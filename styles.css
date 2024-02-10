@@ -12,6 +12,8 @@
     color: var(--text-color);
     margin: 0;
     padding: 0;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
 }
 
 body {
@@ -43,6 +45,7 @@ section {
 button {
     font-size: 2em;
     font-weight: bold;
+    border-radius: 5px;
 }
 
 .crossed {

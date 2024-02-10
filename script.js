@@ -193,13 +193,8 @@ function GameController(
 
     function getCell() {
         const cell = []
-
         cell.push(Math.floor(Math.random() * 3))    // This is for quick random tests
         cell.push(Math.floor(Math.random() * 3))
-
-        /* cell.push(prompt('row') - 1)
-        cell.push(prompt('column') - 1) */
-
         return cell
     }
 
@@ -255,6 +250,10 @@ function GameController(
         }
     }
 
+    function getWinner() {
+        return winner.name
+    }
+
     function askForRematch() {
         return prompt('Want to play another game?(Yes/No)', 'Yes').toLowerCase() === 'yes'
     }
@@ -274,6 +273,7 @@ function GameController(
         getCurrentTurnNumber,
         setParameters,
         getBoard: board.getBoard,
+        getWinner,
         getPlayerInfo
     }
 }
@@ -340,7 +340,7 @@ function displayController() {
         if (result === 'Draw') {       
             roundResultDisplay.textContent = `It's a draw!`
         } else {
-            roundResultDisplay.innerHTML = `And the winner is: <span class="winner-name">${game.getActivePlayer().name}</span>`
+            roundResultDisplay.innerHTML = `And the winner is: <span class="winner-name">${game.getWinner()}</span>`
         }
     }
 
