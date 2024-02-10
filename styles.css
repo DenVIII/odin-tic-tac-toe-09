@@ -165,3 +165,58 @@ a {
     justify-content: center;
     align-items: center;
 }
+
+
+ /* End game / restart btns */
+
+.game-icons {
+    position: absolute;
+    top: 3%;
+    left: 65%;
+    pointer-events: none;
+}
+
+.game-icons>.container {
+    width: 500px;
+    pointer-events: none;
+}
+
+.icon {
+    position: relative;
+    right: 0%;
+    width: 150px;
+    height: 35px;
+    margin-left: auto;
+    font-size: 1.6em;
+    z-index: 1;
+    text-align: end;
+    padding-right: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 20%;
+    pointer-events: auto;
+}
+
+.game-icons>.container:first-child>.icon {
+    font-size: 2em;
+}
+
+.icon-descr {
+    position: relative;
+    left: 70%;
+}
+
+.game-icons>.container:hover>.icon {
+    width: 50px;
+    transition: 0.8s;
+}
+
+.game-icons>.container:hover>.icon>i::before {
+    transition: 0.8s;
+    color: var(--accent-color);
+    font-size: 1.1em;
+}
+
+i::before {
+    color: var(--text-color);
+}

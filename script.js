@@ -329,7 +329,6 @@ function displayController() {
             crossLine(result)
             setTimeout(showGameResultScreen, 2000)
         }
-        
     }
 
     function showGameResultScreen() {
