@@ -16,6 +16,10 @@
     transition: 0.2s;
 }
 
+.hidden {
+    display: none;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -133,6 +137,7 @@ a {
     width: 100%;
     min-height: 100%;
     background-color: #34363380;
+    z-index: 2;
 }
 
 .container {
@@ -193,7 +198,6 @@ a {
     padding-right: 10px;
     background-color: white;
     border: none;
-    border-radius: 20%;
     pointer-events: none;
 }
 
@@ -221,3 +225,5 @@ i::before {
     color: var(--text-color);
     pointer-events: auto;
 }
+
+/* Starting menu section */
