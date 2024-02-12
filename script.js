@@ -267,6 +267,12 @@ function GameController(
         return false //For now its set as false, but here should be askForRematch()
     }
 
+    function rematch() {
+        players.forEach(player => {
+            player.wins = 0;
+        })
+    }
+
     return {
         playRound,
         getActivePlayer,
@@ -274,7 +280,8 @@ function GameController(
         setParameters,
         getBoard: board.getBoard,
         getWinner,
-        getPlayerInfo
+        getPlayerInfo,
+        rematch
     }
 }
 
@@ -291,6 +298,7 @@ function displayController() {
     const roundResultDisplay = document.querySelector('.result-display')
     const turnNumber = document.querySelector('.turn-number')
     const turnPlayer = document.querySelector('.turn-player')
+    const restartGameBtn = document.querySelector('.restart')
 
     function updateGameBoard() {
         gameField.textContent = ''
@@ -357,8 +365,17 @@ function displayController() {
             `
         })
     }
+
+    function startNewGame(e) {
+        e.preventDefault()
+        game.setParameters()
+        game.rematch()
+        updateGameBoard()
+    }
+
     gameField.addEventListener('click', clickHandlerBoard)
     roundResultScreen.addEventListener('click', closeGameResultScreen)
+    restartGameBtn.addEventListener('click', startNewGame)
 
     updateGameBoard()
 }
