@@ -227,3 +227,15 @@ i::before {
 }
 
 /* Starting menu section */
+
+.game-menu .player-name {
+    height: 2rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-family: 'Space Mono', sans-serif;
+    border: none;
+}
+
+#player-two-input {
+    text-align: right;
+}
