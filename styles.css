@@ -187,18 +187,18 @@ a {
     width: 150px;
     height: 35px;
     margin-left: auto;
-    font-size: 1.6em;
+    font-size: 1.2em;
     z-index: 1;
     text-align: end;
     padding-right: 10px;
     background-color: white;
     border: none;
     border-radius: 20%;
-    pointer-events: auto;
+    pointer-events: none;
 }
 
 .game-icons>.container:first-child>.icon {
-    font-size: 2em;
+    font-size: 1.6em;
 }
 
 .icon-descr {
@@ -214,9 +214,10 @@ a {
 .game-icons>.container:hover>.icon>i::before {
     transition: 0.8s;
     color: var(--accent-color);
-    font-size: 1.1em;
+    font-size: 1.5em;
 }
 
 i::before {
     color: var(--text-color);
+    pointer-events: auto;
 }
