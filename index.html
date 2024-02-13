@@ -23,20 +23,33 @@
             </div>
         </div>
     </div>
-    <section class="game-menu">
-        <h2 class="title">Who's playing today?</h2>
-        <div class="game-players">
-            <div class="player one">
-                <input type="text" placeholder="Player One" class="player-name" id="player-one-input" name="player-one-input">
-                <label for="player-one-input" class="player-mark">as X's</label>
-            </div>
-            <div class="score bold">/</div>
-            <div class="player two">
-                <input type="text" placeholder="Player Two" class="player-name" id="player-two-input" name="player-two-input">
-                <label for="player-two-input" class="player-mark">as O's</label>
+    <form class="game-menu">
+        <div class="wrapper">
+            <h2 class="title">Who's playing today?</h2>
+            <div class="game-players">
+                <div class="player one">
+                    <input type="text" placeholder="Player One" class="player-name" id="player-one-input" name="player-one-input">
+                    <label for="player-one-input" class="player-mark">as X's</label>
+                </div>
+                <div class="divider bold">/</div>
+                <div class="player two">
+                    <input type="text" placeholder="Player Two" class="player-name" id="player-two-input" name="player-two-input">
+                    <label for="player-two-input" class="player-mark">as O's</label>
+                </div>
             </div>
         </div>
-    </section>
+        <fieldset class="game-options">
+            <legend class="title">Choose a game mode:</legend>
+            <div class="option-container">
+                <input type="radio" name="option-vs-player" id="option-vs-player">
+                <label for="option-vs-player" class="option">Player-vs-Player</label>
+            </div>
+            <div class="option-container">
+                <input type="radio" name="option-vs-bot" id="option-vs-bot">
+                <label for="option-vs-bot" class="option">Player-vs-Bot</label>
+            </div>
+        </fieldset>
+    </form>
     <section class="game-icons hidden">
         <div class="container">
             <div class="icon-descr">End game?</div>

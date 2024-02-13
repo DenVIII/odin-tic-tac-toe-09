@@ -35,7 +35,7 @@ header {
     font-family: 'Roboto', sans-serif;
 }
 
-section {
+section, form {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -181,7 +181,7 @@ a {
     pointer-events: none;
 }
 
-.game-icons>.container {
+.game-icons > .container {
     width: 500px;
     pointer-events: none;
 }
@@ -201,7 +201,7 @@ a {
     pointer-events: none;
 }
 
-.game-icons>.container:first-child>.icon {
+.game-icons > .container:first-child > .icon {
     font-size: 1.6em;
 }
 
@@ -210,12 +210,12 @@ a {
     left: 70%;
 }
 
-.game-icons>.container:hover>.icon {
+.game-icons > .container:hover > .icon {
     width: 50px;
     transition: 0.8s;
 }
 
-.game-icons>.container:hover>.icon>i::before {
+.game-icons > .container:hover > .icon > i::before {
     transition: 0.8s;
     color: var(--accent-color);
     font-size: 1.5em;
@@ -238,4 +238,69 @@ i::before {
 
 #player-two-input {
     text-align: right;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: 'Space Mono', sans-serif;
+}
+
+.divider {
+    text-align: center;
+    font-size: 2.25rem;
+}
+
+.game-options {
+    position: relative;
+    width: 330px;
+    height: 330px;
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 10px;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+legend, .option {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+legend {
+    top: 10px;
+}
+
+.option-container {
+    font-size: 1.2rem;
+    width: 220px;
+    height: 50px;
+    background-color: white;
+    box-shadow: 1px 1px 3px #92979c;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.option-container > input {
+    opacity: 0;
+}
+
+.option-container:focus-within {
+    background-color: var(--main-color);
+    box-shadow: 3px 3px 3px #735320;
+}
+
+.option-container:focus-within > label {
+    color: white;
 }
