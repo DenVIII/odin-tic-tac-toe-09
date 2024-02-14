@@ -29,7 +29,6 @@ body {
 }
 
 header {
-    margin-top: 15px;
     font-size: 2.5rem;
     word-spacing: 30px;
     font-family: 'Roboto', sans-serif;
@@ -280,16 +279,19 @@ legend {
     top: 10px;
 }
 
-.option-container {
-    font-size: 1.2rem;
+.option-container, .start-btn {
     width: 220px;
     height: 50px;
     background-color: white;
     box-shadow: 1px 1px 3px #92979c;
     border-radius: 20px;
     text-align: center;
+}
+
+.option-container {
     display: flex;
     align-items: center;
+    font-size: 1.2rem;
 }
 
 .option-container > input {
@@ -302,5 +304,18 @@ legend {
 }
 
 .option-container:focus-within > label {
+    color: white;
+}
+
+.start-btn {
+    font-size: 1.5rem;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.start-btn:hover {
+    cursor: pointer;
+    background-color: var(--main-color);
+    box-shadow: 3px 3px 3px #735320;
     color: white;
 }
