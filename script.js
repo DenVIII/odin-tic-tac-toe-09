@@ -366,7 +366,7 @@ function displayController() {
         })
     }
 
-    function startNewGame(e) {
+    function restartGame(e) {
         e.preventDefault()
         game.setParameters()
         game.rematch()
@@ -375,9 +375,32 @@ function displayController() {
 
     gameField.addEventListener('click', clickHandlerBoard)
     roundResultScreen.addEventListener('click', closeGameResultScreen)
-    restartGameBtn.addEventListener('click', startNewGame)
+    restartGameBtn.addEventListener('click', restartGame)
 
     updateGameBoard()
 }
 
-displayController()
+function menuController() {
+    const playerOneName = document.querySelector('#player-one-input')
+    const playerTwoName = document.querySelector('#player-two-input')
+    const gameStartBtn = document.querySelector('.start-btn')
+    const gameMenu = document.querySelector('.game-menu')
+    const gameBoard = document.querySelector('.game-board')
+    const gameIcons = document.querySelector('.game-icons')
+
+    function startNewGame(e) {
+        const display = displayController()
+        e.preventDefault()
+        console.log('1')
+        setTimeout(toggleVisibility, 500);
+    }
+
+    function toggleVisibility() {
+        gameMenu.classList.toggle('hidden')
+        gameBoard.classList.toggle('hidden')
+        gameIcons.classList.toggle('hidden')
+    }    
+    gameStartBtn.addEventListener('click', startNewGame)
+}
+
+menuController()
