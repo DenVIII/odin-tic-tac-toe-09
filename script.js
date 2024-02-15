@@ -396,6 +396,7 @@ function displayController(playerOne, playerTwo) {
 
 function menuController() {
     let display
+    const gameModes = document.querySelectorAll('.option-radio')
     const playerOneName = document.querySelector('#player-one-input')
     const playerTwoName = document.querySelector('#player-two-input')
     const gameStartBtn = document.querySelector('.start-btn')
@@ -406,8 +407,13 @@ function menuController() {
 
     function startNewGame(e) {
         e.preventDefault()
-        display = displayController(playerOneName.value, playerTwoName.value)
-        setTimeout(toggleVisibility, 300)
+        gameModes.forEach(radio => {
+            if (radio.checked) {
+                display = displayController(playerOneName.value, playerTwoName.value)
+                setTimeout(toggleVisibility, 300)
+            }
+        })
+        
     }
 
     function toggleVisibility() {
