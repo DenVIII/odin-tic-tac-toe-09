@@ -285,8 +285,8 @@ function GameController(
     }
 }
 
-function displayController() {
-    const game = GameController()
+function displayController(playerOne, playerTwo) {
+    const game = GameController(playerOne, playerTwo)
     const gameSection = document.querySelector('.game-board')
     const gameField = document.querySelector('.game-field')
     const playerOneName = document.querySelector('.one>.player-name>span')
@@ -299,6 +299,11 @@ function displayController() {
     const turnNumber = document.querySelector('.turn-number')
     const turnPlayer = document.querySelector('.turn-player')
     const restartGameBtn = document.querySelector('.restart')
+
+    function updatePlayerNames() {
+        playerOneName.textContent = playerOne
+        playerTwoName.textContent = playerTwo
+    }
 
     function updateGameBoard() {
         gameField.textContent = ''
@@ -316,8 +321,6 @@ function displayController() {
             })
         })
 
-        playerOneName.textContent = game.getPlayerInfo(0, 'name')
-        playerTwoName.textContent = game.getPlayerInfo(1, 'name')
         playerOneWins.textContent = game.getPlayerInfo(0, 'wins')
         playerTwoWins.textContent = game.getPlayerInfo(1, 'wins')
         turnNumber.textContent = game.getCurrentTurnNumber()
@@ -367,32 +370,44 @@ function displayController() {
     }
 
     function restartGame(e) {
-        e.preventDefault()
         game.setParameters()
         game.rematch()
         updateGameBoard()
+    }
+
+    function clearAllEventListeners() {
+        gameField.removeEventListener('click', clickHandlerBoard)
+        roundResultScreen.removeEventListener('click', closeGameResultScreen)
+        restartGameBtn.removeEventListener('click', restartGame)
     }
 
     gameField.addEventListener('click', clickHandlerBoard)
     roundResultScreen.addEventListener('click', closeGameResultScreen)
     restartGameBtn.addEventListener('click', restartGame)
 
+    updatePlayerNames()
     updateGameBoard()
+
+    return {
+        restartGame,
+        clearAllEventListeners
+    }
 }
 
 function menuController() {
+    let display
     const playerOneName = document.querySelector('#player-one-input')
     const playerTwoName = document.querySelector('#player-two-input')
     const gameStartBtn = document.querySelector('.start-btn')
     const gameMenu = document.querySelector('.game-menu')
     const gameBoard = document.querySelector('.game-board')
     const gameIcons = document.querySelector('.game-icons')
+    const endGameBtn = document.querySelector('.end')
 
     function startNewGame(e) {
-        const display = displayController()
         e.preventDefault()
-        console.log('1')
-        setTimeout(toggleVisibility, 500);
+        display = displayController(playerOneName.value, playerTwoName.value)
+        setTimeout(toggleVisibility, 300)
     }
 
     function toggleVisibility() {
@@ -400,7 +415,18 @@ function menuController() {
         gameBoard.classList.toggle('hidden')
         gameIcons.classList.toggle('hidden')
     }    
+
+    function endGame(e) {
+        e.preventDefault()
+        playerOneName.value = ''
+        playerTwoName.value = ''
+        display.restartGame()
+        display.clearAllEventListeners()
+        setTimeout(toggleVisibility, 300)
+    }
+
     gameStartBtn.addEventListener('click', startNewGame)
+    endGameBtn.addEventListener('click', endGame)
 }
 
 menuController()
