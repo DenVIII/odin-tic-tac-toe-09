@@ -431,8 +431,23 @@ function menuController() {
         setTimeout(toggleVisibility, 300)
     }
 
+    function toggleActivePlayerInput()  {
+        if (this.id === 'option-vs-bot') {
+            playerTwoName.value = 'Computer'
+            playerTwoName.setAttribute('disabled')
+        } else {
+            if (playerTwoName.value === 'Computer') {
+                playerTwoName.value = ''
+            }
+            playerTwoName.setAttribute('enabled')
+        }
+    }
+    
     gameStartBtn.addEventListener('click', startNewGame)
     endGameBtn.addEventListener('click', endGame)
+    gameModes.forEach(mode => {
+        mode.addEventListener('change', toggleActivePlayerInput)
+    })
 }
 
 menuController()

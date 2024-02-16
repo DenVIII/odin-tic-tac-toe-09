@@ -240,6 +240,19 @@ i::before {
     text-align: right;
 }
 
+input[type="text"] {
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+}
+
+input[disabled="true"] {
+    background-color: var(--background-color);
+}
+
 .title {
     text-align: center;
     font-size: 1.5rem;
@@ -280,31 +293,41 @@ legend {
     top: 10px;
 }
 
-.option-container, .start-btn {
+.option-container > .option, .start-btn {
     width: 220px;
     height: 50px;
     background-color: white;
     box-shadow: 1px 1px 3px #92979c;
     border-radius: 20px;
-    text-align: center;
 }
 
 .option-container {
-    display: flex;
-    align-items: center;
     font-size: 1.2rem;
+    margin-bottom: 50px;
 }
 
 .option-container > input {
     opacity: 0;
 }
 
-.option-container:focus-within {
+.option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option-container > input[type="radio"]:checked {
     background-color: var(--main-color);
     box-shadow: 3px 3px 3px #735320;
 }
 
-.option-container:focus-within > label {
+.option-container:focus-within > .option {
+    color: white;
+}
+
+input[type="radio"]:checked + .option {
+    background-color: var(--main-color);
+    box-shadow: 3px 3px 3px #735320;
     color: white;
 }
 
