@@ -147,7 +147,8 @@ function Cell(){
 
 function GameController(
     playerOne = 'Player One',
-    playerTwo = 'Player Two'
+    playerTwo = 'Player Two',
+    gameMode
 ){
     const board = Gameboard()
     let activePlayer, turnCounter, winner
@@ -238,33 +239,11 @@ function GameController(
             }
         } else {
             console.log('Pick a valid cell!')
-        }
-        
-    }
-
-    function announceGameResults() {
-        if (winner) {
-            console.log(`And the winner is ${winner.name}`)
-        } else {
-            console.log(`It's a draw!`)
-        }
+        } 
     }
 
     function getWinner() {
         return winner.name
-    }
-
-    function askForRematch() {
-        return prompt('Want to play another game?(Yes/No)', 'Yes').toLowerCase() === 'yes'
-    }
-
-    function playGame() {
-        setParameters()
-        while (!checkForDraw() && !winner) {
-            playRound(getCell())
-        }
-        announceGameResults()
-        return false //For now its set as false, but here should be askForRematch()
     }
 
     function rematch() {
@@ -285,15 +264,13 @@ function GameController(
     }
 }
 
-function displayController(playerOne, playerTwo) {
-    const game = GameController(playerOne, playerTwo)
-    const gameSection = document.querySelector('.game-board')
+function displayController(playerOne, playerTwo, gameMode) {
+    const game = GameController(playerOne, playerTwo, gameMode)
     const gameField = document.querySelector('.game-field')
     const playerOneName = document.querySelector('.one>.player-name>span')
     const playerTwoName = document.querySelector('.two>.player-name>span')
     const playerOneWins = document.querySelector('.score-one')
     const playerTwoWins = document.querySelector('.score-two')
-    const winnerName = document.querySelector('.winner-name')
     const roundResultScreen = document.querySelector('.result-screen')
     const roundResultDisplay = document.querySelector('.result-display')
     const turnNumber = document.querySelector('.turn-number')
@@ -395,7 +372,7 @@ function displayController(playerOne, playerTwo) {
 }
 
 function menuController() {
-    let display
+    let display, gameMode
     const gameModes = document.querySelectorAll('.option-radio')
     const playerOneName = document.querySelector('#player-one-input')
     const playerTwoName = document.querySelector('#player-two-input')
@@ -409,7 +386,7 @@ function menuController() {
         e.preventDefault()
         gameModes.forEach(radio => {
             if (radio.checked) {
-                display = displayController(playerOneName.value, playerTwoName.value)
+                display = displayController(playerOneName.value, playerTwoName.value, gameMode)
                 setTimeout(toggleVisibility, 300)
             }
         })
@@ -432,6 +409,7 @@ function menuController() {
     }
 
     function toggleActivePlayerInput()  {
+        gameMode = this.id
         if (this.id === 'option-vs-bot') {
             playerTwoName.value = 'Computer'
             playerTwoName.setAttribute('disabled')
