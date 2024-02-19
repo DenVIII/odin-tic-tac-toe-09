@@ -156,16 +156,22 @@ function GameController(
         { 
             name: playerOne,
             mark: 'X',
-            wins: 0
+            wins: 0,
+            bot: false
         },
         {
             name: playerTwo,
             mark: 'O',
-            wins: 0
+            wins: 0,
+            bot: false
         }
     ]
 
     setParameters()
+
+    if (gameMode === 'option-vs-bot') {
+        players[1].bot = true
+    }
 
     function setParameters() {
         board.clearBoard()
@@ -225,9 +231,15 @@ function GameController(
         }
     }
 
-    function playRound(cell) {
+    function playRound(coordinates) {
         let result
+        let cell = coordinates;
+
         printNewRound()
+
+        if (gameMode === 'option-vs-bot' && activePlayer.bot) {
+            cell = getCell()
+        }
         console.log(`${getActivePlayer().name} placing ${getActivePlayer().mark} to ${cell[0] + 1} row, ${cell[1] + 1} column`)
         
         if (board.placeMark(cell, getActivePlayer().mark)) {
@@ -237,9 +249,10 @@ function GameController(
             if (result) {
                 return result
             }
-        } else {
+        }   
+        else {
             console.log('Pick a valid cell!')
-        } 
+        }
     }
 
     function getWinner() {
@@ -302,6 +315,8 @@ function displayController(playerOne, playerTwo, gameMode) {
         playerTwoWins.textContent = game.getPlayerInfo(1, 'wins')
         turnNumber.textContent = game.getCurrentTurnNumber()
         turnPlayer.textContent = game.getActivePlayer().name
+
+        emulatePlayerTurn()
     }
 
     function clickHandlerBoard(e) {
@@ -358,6 +373,19 @@ function displayController(playerOne, playerTwo, gameMode) {
         restartGameBtn.removeEventListener('click', restartGame)
     }
 
+    function emulatePlayerTurn() {
+        if (gameMode === 'option-vs-bot' && game.getActivePlayer().name === 'Computer') {
+            const result = game.playRound()
+            setTimeout(updateGameBoard, 1500)
+
+            if (result) {
+                changeResultScreenContent(result)
+                crossLine(result)
+                setTimeout(showGameResultScreen, 2000)
+            }
+        }
+    }
+
     gameField.addEventListener('click', clickHandlerBoard)
     roundResultScreen.addEventListener('click', closeGameResultScreen)
     restartGameBtn.addEventListener('click', restartGame)
@@ -384,6 +412,7 @@ function menuController() {
 
     function startNewGame(e) {
         e.preventDefault()
+        setDefaultPlayerNames()
         gameModes.forEach(radio => {
             if (radio.checked) {
                 display = displayController(playerOneName.value, playerTwoName.value, gameMode)
@@ -421,6 +450,15 @@ function menuController() {
         }
     }
     
+    function setDefaultPlayerNames() {
+        if (playerOneName.value === '') {
+            playerOneName.value = 'Player One'
+        }
+        if (playerTwoName.value === '') {
+            playerTwoName.value = 'Player Two'
+        }
+    }
+
     gameStartBtn.addEventListener('click', startNewGame)
     endGameBtn.addEventListener('click', endGame)
     gameModes.forEach(mode => {
